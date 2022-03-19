@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+{%  load static %}
+<html xmlns="http://www.w3.org/1999/html">
+
+<!--<style>-->
+<!--    .banner{-->
+<!--    background-color:darkslategrey;-->
+<!--    width:100%;-->
+<!--    height:200px;-->
+<!--    margin-bottom:50px;-->
+<!--}-->
+<!--.banner{-->
+<!--    background-color:AA336A;-->
+<!--    width:100%;-->
+<!--    height:200px;-->
+<!--    margin-bottom:50px;-->
+<!--}-->
+<!--.banner-text{-->
+<!--    top:20%;-->
+<!--    left:50%;-->
+<!--    position:absolute;-->
+<!--    transform:translate(-50%,-50%);-->
+<!--    color:white;-->
+<!--}-->
+
+<!--</style>-->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="banner">
+                   <div class="banner-text"><h1>TODO</h1>
+
+                   </div>
+
+
+
+
+{% if user.is_authenticated %}
+             Hai {{user.username}}
+            <a href="accounts/logout"><button class='btn btn-dark pull-right'>
+          Logout          </button></a>
+            {% else %}
+
+      <a href="accounts/register"><button class='btn btn-dark pull-right'>
+          Register          </button></a>
+            <a href="accounts/login"><button class='btn btn-dark pull-right'>
+          Login          </button></a>
+            {% endif %}
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+<div class="col-md-6">
+    <h4>add task</h4>
+    <form method="post" class="p-3 shadow">
+  {% csrf_token %}
+    <div class="mb-3">
+<input type="text" class="form-control"  name="name" placeholder="Name of Task">
+        </div>
+    <div class="mb-3">
+<input type="text" name="priority" class="form-control"  placeholder="Your Priority">
+        </div>
+            <div class="mb-3">
+<input type="date" name="date" class="form-control"  placeholder="Date">
+        </div>
+    <input type="submit" class="btn btn-success" >
+
+</form>
+</div>
+
+        <div class="col-md-6">
+            <h4>task complted</h4>
+{% for i in obj1 %}
+            <div class=" shadow card">
+            <div class="card-body">
+                <h5 class="card-title">{{i.name}}</h5>
+
+                <p><b>{{i.priority}}</b></p>
+                                <p><b>{{i.date}}</b></p>
+
+                <a class="btn btn-danger" href="{% url 'delete' i.id %}">Delete</a>
+                <a class="btn btn-success" href="{% url 'update' i.id %}">Update</a>
+
+            </div>
+                </div>
+            <br>
+            {% endfor %}
+
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
+</html>
+{% endblock %}
